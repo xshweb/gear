@@ -1,0 +1,10 @@
+{
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "sails": "~0.9.0",
+    "sails-disk": "~0.9.0",
+    "jade": "~1.1.0",
+    "grunt": "~0.4.0"
+  }
+}

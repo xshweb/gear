@@ -1,0 +1,17 @@
+extends base
+
+block body
+  header.page-header
+    h2 相思湖网站值班安排系统
+
+  form(action='/department/create', method='post')
+    .form-group.input-group
+      input.form-control(type='text' name='name' placeholder='部门')
+      span.input-group-btn
+        button.btn.btn-primary
+          span.glyphicon.glyphicon-plus
+
+  ul.list-inline
+    each department in departments
+      li
+        a.btn.btn-primary(href='/department/' + department.id)= department.name

@@ -1,0 +1,76 @@
+extends base
+
+block body
+  div(ng-controller='MemberCtrl')
+    header.page-header
+      h2
+        a(href='/department')
+          span.glyphicon.glyphicon-arrow-left.margin-right
+        span {{department.name}}
+        .pull-right.btn-group
+          button.btn.btn-primary(title='添加成员', data-toggle='modal', data-target='#add-member')
+            span.glyphicon.glyphicon-plus
+          button.btn.btn-warning(title='编辑部门名称', data-toggle='modal', data-target='#edit-department')
+            span.glyphicon.glyphicon-pencil
+          button.btn.btn-danger(title='删除部门', data-toggle='modal', data-target='#remove-department')
+            span.glyphicon.glyphicon-trash
+          button.btn.btn-success(title='保存', ng-click='putData()')
+            span.glyphicon.glyphicon-cloud-upload
+
+    .members.row
+      section.member.col-sm-6.col-lg-4(ng-repeat='member in department.members')
+        .input-group.form-group
+          span.input-group-addon
+            span.glyphicon.glyphicon-user
+          input.form-control(type='text', ng-model='member.name', placeholder='姓名')
+        .input-group.form-group
+          span.input-group-addon
+            span.glyphicon.glyphicon-phone
+          input.form-control(type='text', ng-model='member.phone', placeholder='手机号码')
+
+        section.row(ng-repeat='time in member.times')
+          .form-group.col-xs-2
+            input.form-control.input-sm(type='text', ng-model='time.week')
+          .form-group.col-xs-8
+            input.form-control.input-sm(type='text', ng-model='time.lessons')
+          .form-group.col-xs-2
+            button.btn.btn-danger.btn-sm(ng-click='removeTime(member.times, time)')
+              span.glyphicon.glyphicon-remove
+
+        button.btn.btn-primary.btn-sm.btn-block(ng-click='addTime(member.times)')
+          span.glyphicon.glyphicon-plus
+
+    +modal('edit-department', 'pencil', '修改部门名称')
+      input.form-control(type='text', ng-model='department.name')
+
+    +modal('add-member', 'plus', '添加成员')
+      .input-group.form-group
+        span.input-group-addon
+          span.glyphicon.glyphicon-user
+        input.form-control(type='text', ng-model='memberName', placeholder='姓名')
+      .input-group.form-group
+        span.input-group-addon
+          span.glyphicon.glyphicon-phone
+        input.form-control(type='text', ng-model='memberPhone', placeholder='手机号码')
+      .form-group
+        button.btn.btn-primary.btn-block(data-dismiss='modal', ng-click='addMember()')
+          span.glyphicon.glyphicon-plus
+
+    +modal('remove-department', 'remove', '删除部门')
+      button.btn.btn-danger.btn-block(ng-click='removeDepartment()')
+        span.glyphicon.glyphicon-exclamation-sign.margin-right
+        span 删除{{department.name}}
+
+  script(src='/scripts/member.js')
+
+mixin modal(id, icon, title)
+  .modal.fade(id=id)
+    .modal-dialog.modal-sm
+      .modal-content
+        .modal-header
+          button.close(data-dismiss='modal') &times;
+          h4.modal-title
+            span.glyphicon.margin-right(class='glyphicon-' + icon)
+            = title
+        .modal-body
+          block
