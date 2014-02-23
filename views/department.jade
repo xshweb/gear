@@ -67,6 +67,18 @@ block body
         span 删除{{department.name}}
 
     +modal('arrangement', '值班安排表', 'th', 'lg')
+      table#table-arrangement.table.table-bordered
+        tr
+          th 星期一
+          th 星期二
+          th 星期三
+          th 星期四
+          th 星期五
+        tr(ng-repeat='section in [1, 2, 3, 4]')
+          td(ng-repeat='week in [1, 2, 3, 4, 5]')
+            .label.label-primary(
+              ng-repeat='member in arrangement["" + section + week]',
+              title='{{member.phone}}') {{member.name}}
 
   script(src='/scripts/controllers/member.js')
 
