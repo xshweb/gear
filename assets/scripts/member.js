@@ -36,4 +36,10 @@ function MemberCtrl($scope, $http) {
       location = '/department';
     });
   };
+
+  $scope.removeMember = function (members, member) {
+    members.splice(members.indexOf(member), 1);
+  };
 }
+
+$('[data-tooltip]').tooltip();

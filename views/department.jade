@@ -4,12 +4,12 @@ block body
   div(ng-controller='MemberCtrl')
     header.page-header
       h2
-        a(href='/department')
+        a(href='/department', title='返回')
           span.glyphicon.glyphicon-arrow-left.margin-right
         span {{department.name}}
         .pull-right.btn-group
           button.btn.btn-primary(title='添加成员', data-toggle='modal', data-target='#add-member')
-            span.glyphicon.glyphicon-plus
+            span.glyphicon.glyphicon-plus()
           button.btn.btn-warning(title='编辑部门名称', data-toggle='modal', data-target='#edit-department')
             span.glyphicon.glyphicon-pencil
           button.btn.btn-danger(title='删除部门', data-toggle='modal', data-target='#remove-department')
@@ -34,11 +34,13 @@ block body
           .form-group.col-xs-8
             input.form-control.input-sm(type='text', ng-model='time.lessons')
           .form-group.col-xs-2
-            button.btn.btn-danger.btn-sm(ng-click='removeTime(member.times, time)')
+            button.btn.btn-danger.btn-sm(title='删除空余时间', ng-click='removeTime(member.times, time)')
               span.glyphicon.glyphicon-remove
-
-        button.btn.btn-primary.btn-sm.btn-block(ng-click='addTime(member.times)')
-          span.glyphicon.glyphicon-plus
+        .btn-group
+          button.btn.btn-primary.btn-sm(title='添加空余时间', ng-click='addTime(member.times)')
+            span.glyphicon.glyphicon-plus
+          button.btn.btn-danger.btn-sm(title='删除成员', ng-click='removeMember(department.members, member)')
+            span.glyphicon.glyphicon-trash
 
     +modal('edit-department', 'pencil', '修改部门名称')
       input.form-control(type='text', ng-model='department.name')
