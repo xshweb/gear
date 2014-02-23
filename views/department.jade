@@ -7,7 +7,7 @@ block body
         a(href='/department', title='返回')
           span.glyphicon.glyphicon-arrow-left.margin-right
         span {{department.name}}
-        .pull-right.btn-group
+        .pull-right.btn-group.tools
           button.btn.btn-primary(title='添加成员', data-toggle='modal', data-target='#add-member')
             span.glyphicon.glyphicon-plus()
           button.btn.btn-warning(title='编辑部门名称', data-toggle='modal', data-target='#edit-department')
@@ -16,9 +16,11 @@ block body
             span.glyphicon.glyphicon-trash
           button.btn.btn-success(title='保存', ng-click='putData()')
             span.glyphicon.glyphicon-cloud-upload
+          button.btn.btn-info(title='查看值班表', data-toggle='modal', data-target='#arrangement')
+            span.glyphicon.glyphicon-th
 
     .members.row
-      section.member.col-sm-6.col-lg-4(ng-repeat='member in department.members')
+      section.member.col-sm-6.col-lg-4.col-sm-offset-3.col-lg-offset-4(ng-repeat='member in department.members')
         .input-group.form-group
           span.input-group-addon
             span.glyphicon.glyphicon-user
@@ -35,17 +37,18 @@ block body
             input.form-control.input-sm(type='text', ng-model='time.lessons')
           .form-group.col-xs-2
             button.btn.btn-danger.btn-sm(title='删除空余时间', ng-click='removeTime(member.times, time)')
-              span.glyphicon.glyphicon-remove
+              span.glyphicon.glyphicon-trash
         .btn-group
           button.btn.btn-primary.btn-sm(title='添加空余时间', ng-click='addTime(member.times)')
             span.glyphicon.glyphicon-plus
           button.btn.btn-danger.btn-sm(title='删除成员', ng-click='removeMember(department.members, member)')
             span.glyphicon.glyphicon-trash
+        hr
 
-    +modal('edit-department', 'pencil', '修改部门名称')
+    +modal('edit-department', '修改部门名称', 'pencil', 'sm')
       input.form-control(type='text', ng-model='department.name')
 
-    +modal('add-member', 'plus', '添加成员')
+    +modal('add-member', '添加成员', 'plus', 'sm')
       .input-group.form-group
         span.input-group-addon
           span.glyphicon.glyphicon-user
@@ -58,16 +61,18 @@ block body
         button.btn.btn-primary.btn-block(data-dismiss='modal', ng-click='addMember()')
           span.glyphicon.glyphicon-plus
 
-    +modal('remove-department', 'remove', '删除部门')
+    +modal('remove-department', '删除部门', 'trash', 'sm')
       button.btn.btn-danger.btn-block(ng-click='removeDepartment()')
         span.glyphicon.glyphicon-exclamation-sign.margin-right
         span 删除{{department.name}}
 
-  script(src='/scripts/member.js')
+    +modal('arrangement', '值班安排表', 'th', 'lg')
 
-mixin modal(id, icon, title)
+  script(src='/scripts/controllers/member.js')
+
+mixin modal(id, title, icon, size)
   .modal.fade(id=id)
-    .modal-dialog.modal-sm
+    .modal-dialog(class='modal-' + size)
       .modal-content
         .modal-header
           button.close(data-dismiss='modal') &times;

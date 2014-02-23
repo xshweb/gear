@@ -14,4 +14,13 @@ block body
   ul.list-inline
     each department in departments
       li
-        a.btn.btn-primary(href='/department/' + department.id)= department.name
+        a.btn.department(href='/department/' + department.id)= department.name
+  
+  script.
+    (function(){
+      var btn_types = ['primary', 'danger', 'info', 'warning', 'success'];
+
+      $('.department').each(function (index) {
+        $(this).addClass('btn-' + btn_types[index % btn_types.length]);
+      });
+    })();
