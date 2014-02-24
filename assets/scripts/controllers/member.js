@@ -1,5 +1,5 @@
 function MemberCtrl($scope, $http) {
-  $http.get(document.URL).success(function (data) {
+  $http.get(document.URL + '?r').success(function (data) {
     $scope.department = data;
     $scope.arrangement = arrange($scope.department.members);
   });
